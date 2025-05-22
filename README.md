@@ -36,6 +36,9 @@ Buka folder BE dan FE di Laragon (bisa satu jendela atau dua window) Jalankan BE
         
 ```
 
+Note :
+pastikan bahwa sudah ada database penjadwalan_sidang
+
 Pastikan BE dapat diakses via Postman: 
 
         GET : http://localhost:8080/dosen
