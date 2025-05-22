@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\JadwalController;
+
 
 // Route default (opsional)
 Route::get('/', function () {
@@ -28,5 +28,3 @@ Route::post('/simpanmahasiswa', [DosenController::class, 'store'])->name('mahasi
 Route::get('/editmahasiswa/{nim}', [DosenController::class, 'edit']);
 Route::put('/updatemahasiswa/{nim}', [DosenController::class, 'update']);
 Route::delete('/hapusmahasiswa/{nim}', [DosenController::class, 'destroy']);
-// Jadwal Sidang
-Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal');

@@ -10,51 +10,52 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="bg-blue-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800">
   <div class="flex min-h-screen overflow-x-hidden">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-gradient-to-b from-blue-700 via-blue-500 to-pink-200 text-white px-6 pt-6 fixed h-full shadow-xl flex flex-col">
+    <aside class="w-64 bg-gradient-to-b from-[#F9A8D4] via-[#f472b6] to-[#c084fc] text-white px-6 pt-6 fixed h-full shadow-xl flex flex-col">
       <h1 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <i data-lucide="book-open" class="w-6 h-6 text-green-300"></i>
-        <span>JSTA</span><span class="text-pink-200"></span>
+        <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+        <span>JSTA</span>
       </h1>
       <nav class="space-y-3">
-        <a href="/dashboard" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-10 hover:bg-green-400/20 transition">
-          <i data-lucide="layout-dashboard" class="w-5 h-5 text-green-200"></i> Dashboard
+        <a href="/dashboard" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-10 hover:bg-white/20 transition">
+          <i data-lucide="layout-dashboard" class="w-5 h-5 text-white"></i> Dashboard
         </a>
-        <a href="/mahasiswa" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-20 font-semibold hover:bg-pink-400/20 transition">
-          <i data-lucide="users" class="w-5 h-5 text-pink-100"></i> Data Mahasiswa
+        <a href="/mahasiswa" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-20 font-semibold hover:bg-white/30 transition">
+          <i data-lucide="users" class="w-5 h-5 text-white"></i> Data Mahasiswa
         </a>
       </nav>
     </aside>
 
     <!-- Main Content -->
     <div class="flex-1 ml-64" id="mainContent">
-      <nav class="bg-blue-200 text-gray-800 px-6 py-4 flex justify-between items-center shadow sticky top-0 z-10">
+      <nav class="bg-[#f472b6] text-white px-6 py-4 flex justify-between items-center shadow sticky top-0 z-10">
         <h1 class="text-lg font-bold flex items-center gap-2">
-          <i data-lucide="users" class="w-5 h-5 text-blue-700"></i> Data Mahasiswa
+          <i data-lucide="users" class="w-5 h-5 text-white"></i> Data Mahasiswa
         </h1>
       </nav>
 
       <main class="p-6">
-        <div class="bg-blue-100 text-blue-800 text-center py-3 rounded shadow-md">
+        <div class="bg-[#F9A8D4] text-[#3B82F6] text-center py-3 rounded shadow-md">
           <h2 class="text-2xl font-semibold flex justify-center items-center gap-2">
-            <i data-lucide="user-check" class="w-6 h-6 text-blue-500"></i> DATA MAHASISWA
+            <i data-lucide="user-check" class="w-6 h-6 text-[#3B82F6]"></i> DATA MAHASISWA
           </h2>
-        </div><br>
+        </div>
+        <br>
 
         <div class="bg-white p-6 rounded-lg shadow-md max-w-6xl mx-auto">
           <div class="flex justify-between items-center mb-4">
-            <a href="/tambahmahasiswa" class="bg-green-600 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 transition">
+            <a href="/tambahmahasiswa" class="bg-[#f472b6] hover:bg-[#ec4899] text-white px-4 py-2 rounded flex items-center gap-2 transition">
               <i data-lucide="plus" class="w-4 h-4"></i> Tambah
             </a>
-            <input type="text" id="searchInput" placeholder="Cari mahasiswa..." class="border border-blue-300 p-2 rounded w-1/3 focus:outline-blue-500">
+            <input type="text" id="searchInput" placeholder="Cari mahasiswa..." class="border border-pink-400 p-2 rounded w-1/3 focus:outline-pink-500">
           </div>
 
           <div class="overflow-x-auto">
             <table id="mahasiswaTable" class="min-w-full border text-sm text-center">
-              <thead class="bg-blue-300 text-gray-800">
+              <thead class="bg-[#f472b6] text-white">
                 <tr>
                   <th class="border px-4 py-2">NPM</th>
                   <th class="border px-4 py-2">Nama Mahasiswa</th>
@@ -73,7 +74,7 @@
                   <td class="border px-4 py-2">{{ $m['judul_skripsi'] }}</td>
                   <td class="border px-4 py-2">{{ $m['email'] }}</td>
                   <td class="border px-4 py-2 flex items-center justify-center gap-3">
-                    <a href="/editmahasiswa/{{ $m['npm'] }}" class="text-blue-600 hover:text-blue-800">
+                    <a href="/editmahasiswa/{{ $m['npm'] }}" class="text-[#3B82F6] hover:text-[#1e40af]">
                       <i data-lucide="edit-3" class="w-5 h-5"></i>
                     </a>
                     <button onclick="confirmDelete('{{ $m['npm'] }}')" class="text-red-600 hover:text-red-800">

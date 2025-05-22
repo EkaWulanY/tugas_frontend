@@ -10,21 +10,21 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="bg-blue-50 text-gray-800">
+<body class="bg-blue-50 text-gray-700">
   <div class="flex min-h-screen overflow-x-hidden">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-gradient-to-b from-blue-700 via-blue-500 to-pink-200 text-white px-6 pt-6 fixed h-full shadow-xl flex flex-col">
+    <aside class="w-64 bg-gradient-to-b from-blue-600 via-pink-100 to-violet-200 text-white px-6 pt-6 fixed h-full shadow-xl flex flex-col">
       <h1 class="text-2xl font-bold mb-6 flex items-center gap-2">
         <i data-lucide="book-open" class="w-6 h-6 text-green-300"></i>
-        <span>JSTA</span><span class="text-pink-200"></span>
+        <span>JSTA</span>
       </h1>
       <nav class="space-y-3">
         <a href="/dashboard" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-10 hover:bg-green-400/20 transition">
           <i data-lucide="layout-dashboard" class="w-5 h-5 text-green-200"></i> Dashboard
         </a>
-        <a href="/dosen" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-20 font-semibold hover:bg-pink-400/20 transition">
-          <i data-lucide="users" class="w-5 h-5 text-pink-100"></i> Data Dosen
+        <a href="/dosen" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-20 font-semibold hover:bg-pink-300/20 transition">
+          <i data-lucide="users" class="w-5 h-5 text-pink-200"></i> Data Dosen
         </a>
       </nav>
     </aside>
@@ -38,18 +38,18 @@
       </nav>
 
       <main class="p-6">
-        <div class="bg-blue-100 text-blue-800 text-center py-3 rounded shadow-md">
+        <div class="bg-pink-100 text-violet-800 text-center py-3 rounded shadow-md">
           <h2 class="text-2xl font-semibold flex justify-center items-center gap-2">
-            <i data-lucide="user-check" class="w-6 h-6 text-blue-500"></i> DATA DOSEN
+            <i data-lucide="user-check" class="w-6 h-6 text-violet-500"></i> DATA DOSEN
           </h2>
         </div><br>
 
-        <div class="bg-white p-6 rounded-lg shadow-md max-w-6xl mx-auto">
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-6xl mx-auto border border-gray-200">
           <div class="flex justify-between items-center mb-4">
-            <a href="/tambahdosen" class="bg-green-600 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 transition">
+            <a href="/tambahdosen" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 transition">
               <i data-lucide="plus" class="w-4 h-4"></i> Tambah
             </a>
-            <input type="text" id="searchInput" placeholder="Cari dosen..." class="border border-blue-300 p-2 rounded w-1/3 focus:outline-blue-500">
+            <input type="text" id="searchInput" placeholder="Cari dosen..." class="border border-violet-300 p-2 rounded w-1/3 focus:outline-violet-400">
           </div>
 
           <div class="overflow-x-auto">
@@ -71,10 +71,10 @@
                   <td class="border px-4 py-2">{{ $d['email'] }}</td>
                   <td class="border px-4 py-2">{{ $d['program_studi'] }}</td>
                   <td class="border px-4 py-2 flex items-center justify-center gap-3">
-                    <a href="/editdosen/{{ $d['nidn'] }}" class="text-blue-600 hover:text-blue-800">
+                    <a href="/editdosen/{{ $d['nidn'] }}" class="text-violet-600 hover:text-violet-800">
                       <i data-lucide="edit-3" class="w-5 h-5"></i>
                     </a>
-                    <button onclick="confirmDelete('{{ $d['nidn'] }}')" class="text-red-600 hover:text-red-800">
+                    <button onclick="confirmDelete('{{ $d['nidn'] }}')" class="text-red-500 hover:text-red-700">
                       <i data-lucide="trash-2" class="w-5 h-5"></i>
                     </button>
                   </td>
@@ -126,4 +126,5 @@
     });
   </script>
 </body>
+
 </html>

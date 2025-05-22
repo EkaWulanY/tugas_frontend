@@ -23,9 +23,14 @@ class MahasiswaController extends Controller
         return view('mahasiswa', compact('mahasiswa'));
     }
 
+    public function create()
+    {
+        return view('tambahmahasiswa');
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
+        $validate = $request->validate([
             'npm' => 'required',
             'nama_mahasiswa' => 'required',
             'program_studi' => 'required',
@@ -33,9 +38,15 @@ class MahasiswaController extends Controller
             'email' => 'required|email',
         ],);
 
-        Http::post($this->apiUrl, $request->all());
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post($this->apiUrl, $validate);
 
-        return redirect('/mahasiswa')->with('success', 'Mahasiswa berhasil ditambahkan!');
+        if ($response->successful()) {
+            return redirect('/mahasiswa')->with('success', 'Mahasiswa berhasil ditambahkan!');
+        } else {
+            return redirect('/mahasiswa')->with('error', 'Gagal menambahkan mahasiswa ' . $response->body());
+        }
     }
 
     public function edit($id)
