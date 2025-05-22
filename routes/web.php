@@ -24,7 +24,7 @@ Route::delete('/hapusdosen/{nidn}', [DosenController::class, 'destroy']);
 // Mahasiswa
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
 Route::get('/tambahmahasiswa', [MahasiswaController::class, 'create']);
-Route::post('/simpanmahasiswa', [DosenController::class, 'store'])->name('mahasiswa');
+Route::post('/simpanmahasiswa', [DosenController::class, 'store'])->name('mahasiswa.store');
 Route::get('/editmahasiswa/{nim}', [DosenController::class, 'edit']);
 Route::put('/updatemahasiswa/{nim}', [DosenController::class, 'update']);
 Route::delete('/hapusmahasiswa/{nim}', [DosenController::class, 'destroy']);

@@ -12,20 +12,22 @@ class MahasiswaController extends Controller
     public function index()
     {
         $response = Http::get($this->apiUrl);
-        $mahasiswa = $response->json();
-        return view('mahasiswa', compact('mahasiswa'));
-    }
 
-    public function create()
-    {
-        return view('tambahmahasiswa');
+        if ($response->successful()) {
+            // Ambil hanya bagian 'data' dari JSON response
+            $mahasiswa = $response->json()['data'];
+        } else {
+            $mahasiswa = []; // fallback kalau API error
+        }
+
+        return view('mahasiswa', compact('mahasiswa'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'npm' => 'required',
-            'nama_mahasiswa' =>'required',
+            'nama_mahasiswa' => 'required',
             'program_studi' => 'required',
             'judul_skripsi' => 'required',
             'email' => 'required|email',
@@ -56,7 +58,7 @@ class MahasiswaController extends Controller
     {
         $request->validate([
             'npm' => 'required',
-            'nama_mahasiswa' =>'required',
+            'nama_mahasiswa' => 'required',
             'program_studi' => 'required',
             'judul_skripsi' => 'required',
             'email' => 'required|email',
