@@ -164,7 +164,7 @@ Pastikan BE dapat diakses via Postman:
     
 ```
 
-<h3>App\Models\Dosen.php</h3>
+<h3> App\Models\Dosen.php </h3>
 
 ```sql
     
@@ -189,43 +189,33 @@ Pastikan BE dapat diakses via Postman:
     }
 ```
 
-<h3>routes\web.php<\h3>
+<h3> routes\web.php </h3>
     
 ```sql
     
     <?php
     
     use Illuminate\Support\Facades\Route;
-    
     use App\Http\Controllers\DosenController;
-    
     use App\Http\Controllers\MahasiswaController;
     
     // Route default (opsional)
-    
     Route::get('/', function () {
-    
-        return redirect()->route('dosen'); // langsung ke dosen
-        
+        return redirect()->route('dosen'); // langsung ke dosen    
     });
     
     // Dosen
     
     Route::get('/dosen', [DosenController::class, 'index'])->name('dosen');
-    
     Route::get('/tambahdosen', [DosenController::class, 'create']);
-    
     Route::post('/simpandosen', [DosenController::class, 'store'])->name('dosen.store');
-    
     Route::get('/editdosen/{nidn}', [DosenController::class, 'edit']);
-    
     Route::put('/updatedosen/{nidn}', [DosenController::class, 'update']);
-    
     Route::delete('/hapusdosen/{nidn}', [DosenController::class, 'destroy']);
     
 ```
 
-<h3>views\dosen.blade.php<\h3>
+<h3> views\dosen.blade.php </h3>
     
 ```sql
     
@@ -361,7 +351,7 @@ Pastikan BE dapat diakses via Postman:
     
 ```
     
-<h3>views\tambahdosen.blade.php<\h3>
+<h3> views\tambahdosen.blade.php </h3>
     
 ```sql
     
@@ -458,7 +448,7 @@ Pastikan BE dapat diakses via Postman:
     
 ```
     
-<h3>views\editdosen.blade.php<\h3>
+<h3> views\editdosen.blade.php</h3>
     
 ```sql
     
