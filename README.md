@@ -37,7 +37,17 @@ Buka folder BE dan FE di Laragon (bisa satu jendela atau dua window) Jalankan BE
 ```
 
 Note :
-pastikan bahwa sudah ada database penjadwalan_sidang
+1. pastikan bahwa sudah ada database penjadwalan_sidang (bisa copy di file penjadwalan_sidang.sql)
+   
+2. .env.example diubah jadi .env terus bagian dibawah ini dinyalakan dan DB_CONNECTION diubah jadi mysql
+   
+DB_CONNECTION=sqlite
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+
 
 Pastikan BE dapat diakses via Postman: 
 
