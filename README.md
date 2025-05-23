@@ -718,3 +718,290 @@ public function exportPdf()
     }
 
 ```
+
+
+<h2>Versi Bukan Array Tapi Objek</h2>
+
+Dosen Controller.php
+
+```sql
+
+    <?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
+class DosenController extends Controller
+{
+    protected $apiUrl = 'http://localhost:8080/dosen'; // ganti sesuai URL backend kamu
+
+    public function index()
+    {
+        $response = Http::get($this->apiUrl);
+        $dosen = $response->json();
+        return view('dosen', compact('dosen'));
+    }
+
+    public function create()
+    {
+        return view('tambahdosen');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'nidn' => 'required',
+            'email' => 'required|email',
+            'prodi' => 'required',
+        ]);
+
+        Http::post($this->apiUrl, $request->all());
+
+        return redirect('/dosen')->with('success', 'Dosen berhasil ditambahkan!');
+    }
+
+    public function edit($id)
+    {
+        $response = Http::get("{$this->apiUrl}/{$id}");
+
+        if ($response->failed()) {
+            // return redirect('/dosen')->with('error', 'Gagal mengambil data dosen.');
+        }
+
+        $dosen = $response->json();
+
+        // Karena respons tidak mengandung 'id', kirim manual
+       return view('editdosen', [
+    'dosen' => (object) $dosen,
+    'id' => $id
+]);
+    }
+
+    /**
+     * Proses update data dosen.
+     */
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'nama' => 'required',
+            'nidn' => 'required',
+            'email' => 'required|email',
+            'prodi' => 'required',
+        ]);
+
+        $response = Http::put("{$this->apiUrl}/{$id}", $request->all());
+        // dd($response);
+
+        if ($response->successful()) {
+            return redirect('/dosen')->with('success', 'Data dosen berhasil diperbarui!');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data dosen.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        Http::delete("$this->apiUrl/$id");
+
+        return redirect('/dosen')->with('success', 'Data dosen berhasil dihapus!');
+    }
+}
+
+```
+
+<h2>Dosen.php (model)</h2>
+
+```sql
+
+    <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Dosen extends Model
+{
+    use HasFactory;
+
+    // Jika nama tabel di database adalah 'dosen' (bukan 'dosens'), tambahkan baris ini:
+    protected $table = 'dosen';
+
+    // Jika tabel tidak memiliki kolom 'created_at' dan 'updated_at', matikan timestamps
+    public $timestamps = false;
+
+    // (Opsional) Tentukan kolom yang boleh diisi secara massal
+    protected $fillable = [
+    'nama', 'nidn', 'email', 'prodi'];
+
+}
+
+```
+
+<h2>Dosen.blade.php</h2>
+
+
+```sql
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Dosen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-blue-50 text-gray-800">
+  <div class="flex min-h-screen overflow-x-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gradient-to-b from-blue-700 via-blue-500 to-pink-200 text-white px-6 pt-6 fixed h-full shadow-xl flex flex-col">
+      <h1 class="text-2xl font-bold mb-6 flex items-center gap-2 text-white">
+        <i data-lucide="book-open" class="w-6 h-6 text-green-300"></i> <span class="text-white">Sip</span><span class="text-pink-200">Doma</span>
+      </h1>
+      <nav class="space-y-3">
+        <a href="/dashboard" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-10 hover:bg-green-400/20 transition">
+          <i data-lucide="layout-dashboard" class="w-5 h-5 text-green-200"></i> Dashboard
+        </a>
+        <a href="/dosen" class="flex items-center gap-2 py-2 px-4 rounded bg-white bg-opacity-20 font-semibold hover:bg-pink-400/20 transition">
+          <i data-lucide="users" class="w-5 h-5 text-pink-100"></i> Data Dosen
+        </a>
+      </nav>
+    </aside>
+
+
+    <!-- Main Content -->
+    <div class="flex-1 ml-64" id="mainContent">
+      <nav class="bg-blue-200 text-gray-800 px-6 py-4 flex justify-between items-center shadow sticky top-0 z-10">
+        <h1 class="text-lg font-bold flex items-center gap-2">
+          <i data-lucide="users" class="w-5 h-5 text-blue-700"></i> Data Dosen dan Mahasiswa
+        </h1>
+      </nav>
+
+      <main class="p-6">
+        <div class="bg-blue-100 text-blue-800 text-center py-3 rounded shadow-md">
+          <h2 class="text-2xl font-semibold flex justify-center items-center gap-2">
+            <i data-lucide="user-check" class="w-6 h-6 text-blue-500"></i> DATA DOSEN
+          </h2>
+        </div><br>
+
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-6xl mx-auto">
+          <div class="flex justify-between items-center mb-4">
+            <a href="/tambahdosen" class="bg-green-600 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 transition">
+              <i data-lucide="plus" class="w-4 h-4"></i> Tambah
+            </a>
+            <input type="text" id="searchInput" placeholder="Cari dosen..." class="border border-pink-200 p-2 rounded w-1/3 focus:outline-blue-400">
+          </div>
+
+          <div class="overflow-x-auto">
+            <table id="dosenTable" class="min-w-full border text-sm text-center">
+              <thead class="bg-blue-300 text-gray-800">
+                <tr>
+                  <th class="border px-4 py-2">ID</th>
+                  <th class="border px-4 py-2">Nama</th>
+                  <th class="border px-4 py-2">NIDN</th>
+                  <th class="border px-4 py-2">Email</th>
+                  <th class="border px-4 py-2">Program Studi</th>
+                  <th class="border px-4 py-2">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($dosen as $d)
+                <tr class="hover:bg-pink-100">
+                  <td class="border px-4 py-2">{{ $d['id'] }}</td>
+                  <td class="border px-4 py-2">{{ $d['nama'] }}</td>
+                  <td class="border px-4 py-2">{{ $d['nidn'] }}</td>
+                  <td class="border px-4 py-2">{{ $d['email'] }}</td>
+                  <td class="border px-4 py-2">{{ $d['prodi'] }}</td>
+                  <td class="border px-4 py-2 flex items-center justify-center gap-3">
+                    <a href="/editdosen/{{ $d['nidn'] }}" class="text-blue-600 hover:text-blue-800">
+                      <i data-lucide="edit-3" class="w-5 h-5"></i>
+                    </a>
+                    <button onclick="confirmDelete(@js($d['nidn']))" class="text-red-600 hover:text-red-800">
+                      <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function confirmDelete(id) {
+      Swal.fire({
+        title: 'Yakin ingin menghapus?',
+        text: "Data dosen akan dihapus permanen!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = `hapusdosen/${id}`;
+          form.innerHTML = `
+            <input type="hidden" name="_token" value='{{ csrf_token() }}'>
+            <input type="hidden" name="_method" value="DELETE">
+          `;
+          document.body.appendChild(form);
+          form.submit();
+        }
+      });
+    }
+
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+      const searchTerm = this.value.toLowerCase();
+      const rows = document.querySelectorAll("#dosenTable tbody tr");
+      rows.forEach(row => {
+        const rowText = row.innerText.toLowerCase();
+        row.style.display = rowText.includes(searchTerm) ? "" : "none";
+      });
+    });
+  </script>
+</body>
+
+</html>
+
+```
+
+
+<h2> Web.php</h2>
+
+```sql
+
+<?php
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\MahasiswaController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('dashboard');
+})->name('dashboard');
+// Dosen
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dosen', [DosenController::class, 'index'])->name('dosen');
+Route::get('/tambahdosen', [DosenController::class, 'create']);
+Route::post('/simpandosen', [DosenController::class, 'store']);
+Route::get('/editdosen/{id}', [DosenController::class, 'edit']);
+Route::put('/updatedosen/{id}', [DosenController::class, 'update']);
+Route::delete('/hapusdosen/{id}', [DosenController::class, 'destroy']);
+
+```
